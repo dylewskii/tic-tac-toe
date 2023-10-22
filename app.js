@@ -25,3 +25,33 @@ function createGameboard() {
     }
 };
 
+function createPlayer() {
+    const players = {};
+    
+    return players;
+}
+
+function playRound(playerChoice, computerChoice) {
+    const round = {};
+
+    round.playerChoice = playerChoice;
+    round.computerChoice = computerChoice;
+
+    round.playerScore = player
+
+    return round;
+}
+
+function displayController() {
+    renderGameBoard() {
+        //
+    }
+
+    updateScreen(){
+        //
+    }
+
+    updateScore(){
+        //
+    }
+};
