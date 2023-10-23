@@ -39,13 +39,10 @@ const displayController = (function() {
         const gridContainer = document.querySelector(".grid-container");
         const gameboard = createGameboard.gameboard;
 
-        for (let square of gameboard){
+        for (let square = 0; square < gameboard.length; square++){
             const newSquare = document.createElement("div");
             newSquare.classList.add("grid-box");
             newSquare.textContent = gameboard[square];
-            newSquare.style.backgroundColor = "white";
-            newSquare.style.padding = "10px";
-            newSquare.style.border = "1px solid #000";
             gridContainer.appendChild(newSquare);
         }
     }

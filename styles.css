@@ -54,12 +54,20 @@ body {
 
 .header > h1 {
     font-size: 3rem;
-    padding-bottom: 50px;
+    padding: 50px 0 100px 0;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     grid-template-rows: repeat(3, 100px);
+}
+
+.grid-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border: 1px solid #000;
 }
 
