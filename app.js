@@ -10,15 +10,10 @@ const createGameboard = (function() {
 
 // players are going to be stored in objects
 const createPlayers = function(nameOne, nameTwo) {
-    const players = {
-        playerOne: {},
-        playerTwo: {}
-    };
-
-    players.playerOne.name = nameOne;
-    players.playerTwo.name = nameTwo;
-
-    return players;
+    return {
+        playerOne: nameOne,
+        playerTwo: nameTwo
+    }
 };
 
 // object to control the flow of the game itself.
@@ -62,3 +57,4 @@ const displayController = (function() {
 })();
 
 displayController.createDisplay();
+
