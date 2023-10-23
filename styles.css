@@ -43,5 +43,23 @@ table {
 	border-spacing: 0;
 }
 
+/* Main */
 
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header > h1 {
+    font-size: 3rem;
+    padding-bottom: 50px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+}
 
