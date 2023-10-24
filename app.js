@@ -52,16 +52,14 @@ const displayController = (function() {
 
     function bindEvents(){
         const gameBoardBoxes = document.querySelectorAll(".grid-box")
-        gameBoardBoxes.forEach(box => {
-            box.addEventListener("click", () => {
-                console.log(box)
-            })
-        })
-    }
+        gameBoardBoxes.forEach(box => 
+            box.addEventListener("click", handleClick)
+        );
+    };
 
-    // function handleClick(e) {
-        
-    // }
+    function handleClick(e) {
+        console.log(e.target.innerText = "X")
+    }
 
     // function render() {
 
