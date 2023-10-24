@@ -2,8 +2,8 @@
 const createGameboard = (function() {
     const Gameboard = {};
 
-    Gameboard.gameboard = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    Gameboard.getBoard = () => gameboard;
+    Gameboard.gameBoard = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    Gameboard.getBoard = () => gameBoard;
 
     return Gameboard;
 })();
@@ -29,23 +29,24 @@ const playRound = function(playerChoice, computerChoice) {
     return round;
 };
 
-// render the contents of the gameboard array to the webpage 
+// render gameboard contents to the webpage 
 const displayController = (function() {
     const gridContainer = document.querySelector(".grid-container");
-    const gameboard = createGameboard.gameboard;
+    const gridBoxes = document.querySelectorAll(".grid-box");
+    const gameBoard = createGameboard.gameBoard;
 
     function createDisplay() {
-        for (let square = 0; square < gameboard.length; square++){
+        for (let square = 0; square < gameBoard.length; square++){
             const newSquare = document.createElement("div");
             newSquare.classList.add("grid-box");
-            newSquare.textContent = gameboard[square];
+            newSquare.textContent = gameBoard[square];
             gridContainer.appendChild(newSquare);
         }
     };
 
     function resetDisplay() {
-        const gameboardSquares = document.querySelectorAll(".grid-box")
-        gameboardSquares.forEach(square => {
+        const gameBoardSquares = document.querySelectorAll(".grid-box")
+        gameBoardSquares.forEach(square => {
             square.innerText = "";
         });
     };
