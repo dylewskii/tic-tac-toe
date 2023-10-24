@@ -51,6 +51,18 @@ const displayController = (function() {
         });
     };
 
+    function bindEvents(){
+        gridBoxes.forEach(console.log())
+    }
+
+    function handleClick(e) {
+
+    }
+
+    function render() {
+
+    }
+
     return {
         createDisplay,
         resetDisplay
