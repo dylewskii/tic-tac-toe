@@ -32,6 +32,10 @@ const gameController = (function () {
         return result;
     };
 
+    function switchPlayer() {
+        
+    }
+
     function checkWinner(){
 
     }
