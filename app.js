@@ -32,7 +32,6 @@ const playRound = function(playerChoice, computerChoice) {
 // render gameboard contents to the webpage 
 const displayController = (function() {
     const gridContainer = document.querySelector(".grid-container");
-    const gridBoxes = document.querySelectorAll(".grid-box");
     const gameBoard = createGameboard.gameBoard;
 
     function createDisplay() {
@@ -45,29 +44,35 @@ const displayController = (function() {
     };
 
     function resetDisplay() {
-        const gameBoardSquares = document.querySelectorAll(".grid-box")
-        gameBoardSquares.forEach(square => {
-            square.innerText = "";
+        const gameBoardBoxes = document.querySelectorAll(".grid-box")
+        gameBoardBoxes.forEach(box => {
+            box.innerText = "";
         });
     };
 
     function bindEvents(){
-        gridBoxes.forEach(console.log())
+        const gameBoardBoxes = document.querySelectorAll(".grid-box")
+        gameBoardBoxes.forEach(box => {
+            box.addEventListener("click", () => {
+                console.log(box)
+            })
+        })
     }
 
-    function handleClick(e) {
+    // function handleClick(e) {
+        
+    // }
 
-    }
+    // function render() {
 
-    function render() {
-
-    }
+    // }
 
     return {
         createDisplay,
-        resetDisplay
+        resetDisplay,
+        bindEvents,
     }
 })();
 
 displayController.createDisplay();
-
+displayController.bindEvents();
