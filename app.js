@@ -2,7 +2,7 @@
 const createGameboard = (function() {
     const Gameboard = {};
 
-    Gameboard.gameBoard = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    Gameboard.gameBoard = ["", "", "", "", "", "", "", "", ""];
     Gameboard.getBoard = () => gameBoard;
 
     return Gameboard;
@@ -17,17 +17,30 @@ const createPlayers = function(nameOne, nameTwo) {
 };
 
 // object to control the flow of the game itself.
-const playRound = function(playerChoice, computerChoice) {
-    const round = {};
+const gameController = (function () {
 
-    round.playerChoice = playerChoice;
-    round.computerChoice = computerChoice;
 
-    round.playerScore = 0;
-    round.computerScore = 0;
+    function playRound(playerChoice, computerChoice) {
+        const result = {};
+    
+        result.playerChoice = playerChoice;
+        result.computerChoice = computerChoice;
+    
+        result.playerScore = 0;
+        result.computerScore = 0;
+    
+        return result;
+    };
 
-    return round;
-};
+    function checkWinner(){
+
+    }
+
+    return {
+        playRound,
+    }
+
+})();
 
 // render gameboard contents to the webpage 
 const displayController = (function() {
@@ -35,11 +48,12 @@ const displayController = (function() {
     const gameBoard = createGameboard.gameBoard;
 
     function createDisplay() {
-        for (let square = 0; square < gameBoard.length; square++){
-            const newSquare = document.createElement("div");
-            newSquare.classList.add("grid-box");
-            newSquare.textContent = gameBoard[square];
-            gridContainer.appendChild(newSquare);
+        for (let i = 0; i < gameBoard.length; i++){
+            const newBox = document.createElement("button");
+            newBox.classList.add("grid-box");
+            newBox.dataset.index = i;
+            newBox.textContent = gameBoard[i];
+            gridContainer.appendChild(newBox);
         }
     };
 
@@ -53,12 +67,13 @@ const displayController = (function() {
     function bindEvents(){
         const gameBoardBoxes = document.querySelectorAll(".grid-box")
         gameBoardBoxes.forEach(box => 
-            box.addEventListener("click", handleClick)
+            box.addEventListener("click", handleBoxClick)
         );
     };
 
-    function handleClick(e) {
-        console.log(e.target.innerText = "X")
+    function handleBoxClick(e) {
+        e.target.innerText = "X"
+        console.log(e.target.dataset.index);
     }
 
     // function render() {
@@ -69,6 +84,7 @@ const displayController = (function() {
         createDisplay,
         resetDisplay,
         bindEvents,
+        handleBoxClick
     }
 })();
 
