@@ -81,8 +81,8 @@ const displayController = (function() {
         const form = document.querySelector(".game-settings-form");
         startBtn.addEventListener("click", function(e){
             e.preventDefault();
-            const p1InputValue = form.elements.fPlayer.value;
-            const p2InputValue = form.elements.sPlayer.value;
+            const oPlayerInputValue = form.elements.xPlayer.value;
+            const xPlayerInputValue = form.elements.oPlayer.value;
         })
     };
 
