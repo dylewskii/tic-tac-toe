@@ -58,21 +58,24 @@ const displayController = (function() {
     };
 
     function resetDisplay() {
-        const gameBoardBoxes = document.querySelectorAll(".grid-box")
+        const gameBoardBoxes = document.querySelectorAll(".grid-box");
         gameBoardBoxes.forEach(box => {
             box.innerText = "";
         });
     };
 
     function bindEvents(){
-        const gameBoardBoxes = document.querySelectorAll(".grid-box")
+        const gameBoardBoxes = document.querySelectorAll(".grid-box");
         gameBoardBoxes.forEach(box => 
             box.addEventListener("click", handleBoxClick)
         );
+
+        const resetBtn = document.querySelector(".resetBtn");
+        resetBtn.addEventListener("click", resetDisplay)
     };
 
     function handleBoxClick(e) {
-        e.target.innerText = "X"
+        e.target.innerText = "X";
         console.log(e.target.dataset.index);
     }
 

@@ -71,3 +71,23 @@ body {
     border: 1px solid #000;
 }
 
+.grid-box:hover {
+    background-color: aliceblue;
+}
+
+.game-options {
+    margin-top: 50px;
+}
+
+.game-options > button {
+    background-color: aliceblue;
+    border: none;
+    border-radius: 25px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.game-options > button:hover {
+    border: 2px solid rgb(159, 159, 255);
+}
