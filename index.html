@@ -20,11 +20,11 @@
             <form class="game-settings-form" action="post">
                 <div class="input-one">
                     <label for="first-player">X</label>
-                    <input type="text" id="first-player">
+                    <input name="fPlayer" type="text" id="first-player">
                 </div>
                 <div class="input-two">
                     <label for="second-player">O</label>
-                    <input type="text" id="second-player">
+                    <input name="sPlayer" type="text" id="second-player">
                 </div>
             </form>
         </div>
@@ -33,7 +33,7 @@
     <section class="grid-container"></section>
 
     <div class="game-options">
-        <button class="startBtn">Start</button>
+        <button type="submit" class="startBtn">Start</button>
         <button class="resetBtn">Reset</button>
     </div>
 </body>

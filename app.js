@@ -33,7 +33,7 @@ const gameController = (function () {
     };
 
     function switchPlayer() {
-        
+
     }
 
     function checkWinner(){
@@ -76,6 +76,14 @@ const displayController = (function() {
 
         const resetBtn = document.querySelector(".resetBtn");
         resetBtn.addEventListener("click", resetDisplay)
+
+        const startBtn = document.querySelector(".startBtn");
+        const form = document.querySelector(".game-settings-form");
+        startBtn.addEventListener("click", function(e){
+            e.preventDefault();
+            const p1InputValue = form.elements.fPlayer.value;
+            const p2InputValue = form.elements.sPlayer.value;
+        })
     };
 
     function handleBoxClick(e) {
