@@ -93,13 +93,13 @@ body {
 }
 
 .game-settings__top,
-.game-settings__bottom {
+.game-settings-form {
     display: flex;
     justify-content: center;
 }
 
-.game-settings__bottom > .input-one, 
-.game-settings__bottom > .input-two {
+.game-settings-form > .input-one, 
+.game-settings-form > .input-two {
     display: flex;
     flex-direction: column;
     align-items: center;
