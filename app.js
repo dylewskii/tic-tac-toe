@@ -9,16 +9,23 @@ const createGameboard = (function() {
 })();
 
 // players are going to be stored in objects
-const createPlayers = function(xPlayer, oPlayer) {
+const createPlayers = function(xPlayerInputValue, oPlayerInputValue) {
     return {
-        xPlayer: xPlayer,
-        oPlayer: oPlayer
+        xPlayer: {
+            name: xPlayerInputValue,
+            symbol: "X"
+        },
+
+        oPlayer: {
+            name: oPlayerInputValue,
+            symbol: "O"
+        }
     };
 };
 
 // object to control the flow of the game itself.
 const gameController = (function () {
-    const currRound = {
+    const currBoard = {
         1: "",
         2: "",
         3: "",
@@ -43,24 +50,30 @@ const gameController = (function () {
         [3, 5, 7]
     ];
 
-    const players = {};
-    let currPlayer = Object.keys(players)[0];
+    let players = {};
+    const firstPlayer = players.xPlayer;
+    const secondPlayer = players.oPlayer;
+    let currPlayer = players.xPlayer;
 
     const round = {};
     round.xPlayerScore = 0;
     round.oPlayerScore = 0;
 
-    function playRound() {
-        round.playerChoice = playerChoice;
-        round.computerChoice = computerChoice;
-    
-        return result;
+    function playRound(clickedBoxIndex, event) {
+        if (currBoard[clickedBoxIndex] !== ""){
+            console.log("spot taken")
+            return
+        } 
+
+        currBoard[clickedBoxIndex] = "o";
+        // currBoard[clickedBoxIndex] = currPlayer.symbol;
+
+        // checkWinner();
+        // switchPlayer();
     };
 
     function switchPlayer() {
-        let firstPlayer = Object.keys(players)[0];
-        let secondPlayer = Object.keys(players)[1];
-        currPlayer = currPlayer === firstPlayer ? secondPlayer : firstPlayer;
+        // currPlayer = currPlayer === firstPlayer ? secondPlayer : firstPlayer;
     }
 
     function checkWinner(){
@@ -70,7 +83,10 @@ const gameController = (function () {
     return {
         playRound,
         switchPlayer,
-        players
+        players,
+        currPlayer,
+        firstPlayer,
+        currBoard
     }
 
 })();
@@ -106,6 +122,18 @@ const displayController = (function() {
         const resetBtn = document.querySelector(".resetBtn");
         resetBtn.addEventListener("click", resetDisplay)
 
+        // const startBtn = document.querySelector(".startBtn");
+        // const form = document.querySelector(".game-settings-form");
+        // startBtn.addEventListener("click", function(e){
+        //     e.preventDefault();
+        //     const xPlayerInputValue = form.elements.xPlayer.value;
+        //     const oPlayerInputValue = form.elements.oPlayer.value;
+        //     gameController.players = createPlayers(xPlayerInputValue, oPlayerInputValue);
+        //     gameController.currPlayer = gameController.players.xPlayer;
+        // })
+    };
+
+    function beginGame(){
         const startBtn = document.querySelector(".startBtn");
         const form = document.querySelector(".game-settings-form");
         startBtn.addEventListener("click", function(e){
@@ -113,12 +141,15 @@ const displayController = (function() {
             const xPlayerInputValue = form.elements.xPlayer.value;
             const oPlayerInputValue = form.elements.oPlayer.value;
             gameController.players = createPlayers(xPlayerInputValue, oPlayerInputValue);
-        })
+            displayController.createDisplay();
+            displayController.bindEvents();
+        }, {once : true})
     };
 
     function handleBoxClick(e) {
-        e.target.innerText = "X";
-        console.log(e.target.dataset.index);
+        const clickedBoxIndex = parseInt(e.target.dataset.index) + 1;
+        const event = e.target;
+        gameController.playRound(clickedBoxIndex, event);
     }
 
     // function render() {
@@ -129,9 +160,12 @@ const displayController = (function() {
         createDisplay,
         resetDisplay,
         bindEvents,
-        handleBoxClick
+        handleBoxClick,
+        beginGame
     }
 })();
 
-displayController.createDisplay();
-displayController.bindEvents();
+
+displayController.beginGame()
+// displayController.createDisplay();
+// displayController.bindEvents();
