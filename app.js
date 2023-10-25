@@ -9,31 +9,58 @@ const createGameboard = (function() {
 })();
 
 // players are going to be stored in objects
-const createPlayers = function(nameOne, nameTwo) {
+const createPlayers = function(xPlayer, oPlayer) {
     return {
-        playerOne: nameOne,
-        playerTwo: nameTwo
-    }
+        xPlayer: xPlayer,
+        oPlayer: oPlayer
+    };
 };
 
 // object to control the flow of the game itself.
 const gameController = (function () {
+    const currRound = {
+        1: "",
+        2: "",
+        3: "",
+        4: "",
+        5: "",
+        6: "",
+        7: "",
+        8: "",
+        9: "",
+    };
+    const winningCombo = [
+        // horizontal
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        // vertical
+        [1, 4, 7],
+        [2, 5, 8],
+        [3, 6, 9],
+        // diagonal
+        [1, 5, 9],
+        [3, 5, 7]
+    ];
 
+    const players = {};
+    let currPlayer = Object.keys(currPlayers)[0];
 
-    function playRound(playerChoice, computerChoice) {
-        const result = {};
-    
-        result.playerChoice = playerChoice;
-        result.computerChoice = computerChoice;
-    
-        result.playerScore = 0;
-        result.computerScore = 0;
+    const round = {};
+    round.xPlayerScore = 0;
+    round.oPlayerScore = 0;
+
+    function playRound() {
+        round.playerChoice = playerChoice;
+        round.computerChoice = computerChoice;
     
         return result;
     };
 
     function switchPlayer() {
-
+        let firstPlayer = Object.keys(currPlayers)[0];
+        let secondPlayer = Object.keys(currPlayers)[1];
+        currPlayer = currPlayer === firstPlayer ? secondPlayer : firstPlayer;
     }
 
     function checkWinner(){
@@ -42,6 +69,8 @@ const gameController = (function () {
 
     return {
         playRound,
+        switchPlayer,
+        players
     }
 
 })();
@@ -81,8 +110,9 @@ const displayController = (function() {
         const form = document.querySelector(".game-settings-form");
         startBtn.addEventListener("click", function(e){
             e.preventDefault();
-            const oPlayerInputValue = form.elements.xPlayer.value;
-            const xPlayerInputValue = form.elements.oPlayer.value;
+            const xPlayerInputValue = form.elements.xPlayer.value;
+            const oPlayerInputValue = form.elements.oPlayer.value;
+            gameController.currPlayers = createPlayers(xPlayerInputValue, oPlayerInputValue);
         })
     };
 
