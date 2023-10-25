@@ -44,7 +44,7 @@ const gameController = (function () {
     ];
 
     const players = {};
-    let currPlayer = Object.keys(currPlayers)[0];
+    let currPlayer = Object.keys(players)[0];
 
     const round = {};
     round.xPlayerScore = 0;
@@ -58,8 +58,8 @@ const gameController = (function () {
     };
 
     function switchPlayer() {
-        let firstPlayer = Object.keys(currPlayers)[0];
-        let secondPlayer = Object.keys(currPlayers)[1];
+        let firstPlayer = Object.keys(players)[0];
+        let secondPlayer = Object.keys(players)[1];
         currPlayer = currPlayer === firstPlayer ? secondPlayer : firstPlayer;
     }
 
@@ -112,7 +112,7 @@ const displayController = (function() {
             e.preventDefault();
             const xPlayerInputValue = form.elements.xPlayer.value;
             const oPlayerInputValue = form.elements.oPlayer.value;
-            gameController.currPlayers = createPlayers(xPlayerInputValue, oPlayerInputValue);
+            gameController.players = createPlayers(xPlayerInputValue, oPlayerInputValue);
         })
     };
 
