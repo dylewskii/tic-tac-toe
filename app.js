@@ -2,9 +2,10 @@ let gamePlayers = null;
 
 const gameBoardController = (function() {
     const gameBoardObj = {};
-
-    gameBoardObj.gameBoard = ["", "", "", "", "", "", "", "", ""];
-    gameBoardObj.getBoard = () => gameBoard;
+    gameBoardObj.gameBoard = 
+    ["", "", "", 
+    "", "", "", 
+    "", "", ""];
     gameBoardObj.addValue = function (symbol, index) {
         this.gameBoard[index] = `${symbol}`;
     }
@@ -37,18 +38,19 @@ const playerController = function(xPlayerInputValue, oPlayerInputValue) {
 
 
 const gameController = (function () {
+    const gb = gameBoardController.gameBoard;
     const winningCombo = [
         // horizontal
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
         // vertical
+        [0, 3, 6],
         [1, 4, 7],
         [2, 5, 8],
-        [3, 6, 9],
         // diagonal
-        [1, 5, 9],
-        [3, 5, 7]
+        [0, 4, 8],
+        [2, 4, 6]
     ];
 
     function playRound(clickedBoxIndex) {
@@ -56,17 +58,22 @@ const gameController = (function () {
             console.log("spot taken")
             return
         } 
-        gameBoardController.gameBoard[clickedBoxIndex] = "X";
+        gameBoardController.gameBoard[clickedBoxIndex] = gamePlayers.currPlayer.symbol;
+        gamePlayers.switchPlayer()
         
     }
 
-
     function checkWinner(){
 
+        for (let arr = 0; arr < winningCombo.length; arr++){
+            console.log(winningCombo[arr])
+            console.log(gb)
+        }
     }
 
     return {
         playRound,
+        checkWinner
     }
 
 })();
@@ -108,16 +115,6 @@ const displayController = (function() {
 
         const resetBtn = document.querySelector(".resetBtn");
         resetBtn.addEventListener("click", resetDisplay)
-
-        // const startBtn = document.querySelector(".startBtn");
-        // const form = document.querySelector(".game-settings-form");
-        // startBtn.addEventListener("click", function(e){
-        //     e.preventDefault();
-        //     const xPlayerInputValue = form.elements.xPlayer.value;
-        //     const oPlayerInputValue = form.elements.oPlayer.value;
-        //     gameController.players = createPlayers(xPlayerInputValue, oPlayerInputValue);
-        //     gameController.currPlayer = gameController.players.xPlayer;
-        // })
     };
 
     function beginGame(){
@@ -127,7 +124,7 @@ const displayController = (function() {
             e.preventDefault();
             const xPlayerInputValue = form.elements.xPlayer.value;
             const oPlayerInputValue = form.elements.oPlayer.value;
-            let gamePlayers = playerController(xPlayerInputValue, oPlayerInputValue);
+            gamePlayers = playerController(xPlayerInputValue, oPlayerInputValue);
             console.log(gamePlayers) // >> this returns the desired object
             displayController.render();
             displayController.bindEvents();
@@ -137,8 +134,7 @@ const displayController = (function() {
     function handleBoxClick(e) {
         const clickedBoxIndex = parseInt(e.target.dataset.index);
         const eventTarget = e.target;
-        eventTarget.textContent = "X";
-        console.log(eventTarget)
+        eventTarget.textContent = gamePlayers.currPlayer.symbol;
         gameController.playRound(clickedBoxIndex);
     }
 
@@ -151,7 +147,4 @@ const displayController = (function() {
     }
 })();
 
-
 displayController.beginGame()
-// displayController.render();
-// displayController.bindEvents();
