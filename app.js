@@ -1,3 +1,5 @@
+let gamePlayers = null;
+
 const gameBoardController = (function() {
     const gameBoardObj = {};
 
@@ -49,13 +51,13 @@ const gameController = (function () {
         [3, 5, 7]
     ];
 
-    function playRound(clickedBoxIndex, gamePlayers) {
+    function playRound(clickedBoxIndex) {
         if (gameBoardController.gameBoard[clickedBoxIndex] !== ""){
             console.log("spot taken")
             return
         } 
         gameBoardController.gameBoard[clickedBoxIndex] = "X";
-        displayController.createDisplay
+        
     }
 
 
@@ -74,7 +76,11 @@ const displayController = (function() {
     const gridContainer = document.querySelector(".grid-container");
     const gameBoard = gameBoardController.gameBoard;
 
-    function createDisplay() {
+    function render() {       
+        while (gridContainer.firstChild) {
+            gridContainer.removeChild(gridContainer.firstChild);
+        }
+
         for (let i = 0; i < gameBoard.length; i++){
             const newBox = document.createElement("button");
             newBox.classList.add("grid-box");
@@ -82,14 +88,13 @@ const displayController = (function() {
             newBox.textContent = gameBoard[i];
             gridContainer.appendChild(newBox);
         }
-    };
+    }
       
     function resetDisplay() {
-        const gameBoardBoxes = document.querySelectorAll(".grid-box");
-        gameBoardBoxes.forEach(box => {
-            box.innerText = "";
-        });
-    };
+        const gameBoardBoxes = gameBoardController.gameBoard;
+        gameBoardBoxes.forEach((box, i) => gameBoardBoxes[i] = "");
+        render();
+    }
 
     function bindEvents(players){
         const gameBoardBoxes = document.querySelectorAll(".grid-box");
@@ -124,7 +129,7 @@ const displayController = (function() {
             const oPlayerInputValue = form.elements.oPlayer.value;
             let gamePlayers = playerController(xPlayerInputValue, oPlayerInputValue);
             console.log(gamePlayers) // >> this returns the desired object
-            displayController.createDisplay();
+            displayController.render();
             displayController.bindEvents();
         }, {once : true})
     };
@@ -132,11 +137,13 @@ const displayController = (function() {
     function handleBoxClick(e) {
         const clickedBoxIndex = parseInt(e.target.dataset.index);
         const eventTarget = e.target;
+        eventTarget.textContent = "X";
+        console.log(eventTarget)
         gameController.playRound(clickedBoxIndex);
     }
 
     return {
-        createDisplay,
+        render,
         resetDisplay,
         bindEvents,
         handleBoxClick,
@@ -146,5 +153,5 @@ const displayController = (function() {
 
 
 displayController.beginGame()
-// displayController.createDisplay();
+// displayController.render();
 // displayController.bindEvents();
