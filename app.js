@@ -1,16 +1,17 @@
-// Gameboard object which stores the gameboard array
-const createGameboard = (function() {
-    const Gameboard = {};
+const gameBoardController = (function() {
+    const gameBoardObj = {};
 
-    Gameboard.gameBoard = ["", "", "", "", "", "", "", "", ""];
-    Gameboard.getBoard = () => gameBoard;
+    gameBoardObj.gameBoard = ["", "", "", "", "", "", "", "", ""];
+    gameBoardObj.getBoard = () => gameBoard;
+    gameBoardObj.addValue = function (symbol, index) {
+        this.gameBoard[index] = `${symbol}`;
+    }
 
-    return Gameboard;
+    return gameBoardObj;
 })();
 
-// players are going to be stored in objects
 const createPlayers = function(xPlayerInputValue, oPlayerInputValue) {
-    return {
+    let players = {
         xPlayer: {
             name: xPlayerInputValue,
             symbol: "X"
@@ -19,23 +20,22 @@ const createPlayers = function(xPlayerInputValue, oPlayerInputValue) {
         oPlayer: {
             name: oPlayerInputValue,
             symbol: "O"
+        },
+
+        currPlayer: null,
+
+        switchPlayer : function() {
+            this.currPlayer = this.currPlayer === this.xPlayer ? this.oPlayer : this.xPlayer;
         }
     };
+    players.currPlayer = players.xPlayer;
+
+    return players;
+
 };
 
-// object to control the flow of the game itself.
+
 const gameController = (function () {
-    const currBoard = {
-        1: "",
-        2: "",
-        3: "",
-        4: "",
-        5: "",
-        6: "",
-        7: "",
-        8: "",
-        9: "",
-    };
     const winningCombo = [
         // horizontal
         [1, 2, 3],
@@ -50,31 +50,15 @@ const gameController = (function () {
         [3, 5, 7]
     ];
 
-    let players = {};
-    const firstPlayer = players.xPlayer;
-    const secondPlayer = players.oPlayer;
-    let currPlayer = players.xPlayer;
-
-    const round = {};
-    round.xPlayerScore = 0;
-    round.oPlayerScore = 0;
-
-    function playRound(clickedBoxIndex, event) {
-        if (currBoard[clickedBoxIndex] !== ""){
+    function playRound(clickedBoxIndex, gamePlayers) {
+        if (gameBoardController.gameBoard[clickedBoxIndex] !== ""){
             console.log("spot taken")
             return
         } 
-
-        currBoard[clickedBoxIndex] = "o";
-        // currBoard[clickedBoxIndex] = currPlayer.symbol;
-
-        // checkWinner();
-        // switchPlayer();
-    };
-
-    function switchPlayer() {
-        // currPlayer = currPlayer === firstPlayer ? secondPlayer : firstPlayer;
+        gameBoardController.gameBoard[clickedBoxIndex] = "X";
+        displayController.createDisplay
     }
+
 
     function checkWinner(){
 
@@ -82,19 +66,14 @@ const gameController = (function () {
 
     return {
         playRound,
-        switchPlayer,
-        players,
-        currPlayer,
-        firstPlayer,
-        currBoard
     }
 
 })();
 
-// render gameboard contents to the webpage 
+
 const displayController = (function() {
     const gridContainer = document.querySelector(".grid-container");
-    const gameBoard = createGameboard.gameBoard;
+    const gameBoard = gameBoardController.gameBoard;
 
     function createDisplay() {
         for (let i = 0; i < gameBoard.length; i++){
@@ -105,7 +84,7 @@ const displayController = (function() {
             gridContainer.appendChild(newBox);
         }
     };
-
+      
     function resetDisplay() {
         const gameBoardBoxes = document.querySelectorAll(".grid-box");
         gameBoardBoxes.forEach(box => {
@@ -140,28 +119,27 @@ const displayController = (function() {
             e.preventDefault();
             const xPlayerInputValue = form.elements.xPlayer.value;
             const oPlayerInputValue = form.elements.oPlayer.value;
-            gameController.players = createPlayers(xPlayerInputValue, oPlayerInputValue);
+            let gamePlayers = createPlayers(xPlayerInputValue, oPlayerInputValue);
+            console.log(gamePlayers) // >> this returns the desired object
             displayController.createDisplay();
             displayController.bindEvents();
         }, {once : true})
     };
 
     function handleBoxClick(e) {
-        const clickedBoxIndex = parseInt(e.target.dataset.index) + 1;
-        const event = e.target;
-        gameController.playRound(clickedBoxIndex, event);
+        const clickedBoxIndex = parseInt(e.target.dataset.index);
+        const eventTarget = e.target;
+        console.log(eventTarget)
+        console.log(clickedBoxIndex)
+        gameController.playRound(clickedBoxIndex);
     }
-
-    // function render() {
-
-    // }
 
     return {
         createDisplay,
         resetDisplay,
         bindEvents,
         handleBoxClick,
-        beginGame
+        beginGame,
     }
 })();
 
