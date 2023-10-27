@@ -10,7 +10,7 @@ const gameBoardController = (function() {
     return gameBoardObj;
 })();
 
-const createPlayers = function(xPlayerInputValue, oPlayerInputValue) {
+const playerController = function(xPlayerInputValue, oPlayerInputValue) {
     let players = {
         xPlayer: {
             name: xPlayerInputValue,
@@ -28,10 +28,9 @@ const createPlayers = function(xPlayerInputValue, oPlayerInputValue) {
             this.currPlayer = this.currPlayer === this.xPlayer ? this.oPlayer : this.xPlayer;
         }
     };
+
     players.currPlayer = players.xPlayer;
-
     return players;
-
 };
 
 
@@ -92,10 +91,14 @@ const displayController = (function() {
         });
     };
 
-    function bindEvents(){
+    function bindEvents(players){
         const gameBoardBoxes = document.querySelectorAll(".grid-box");
+        const gamePlayers = players;
+        
         gameBoardBoxes.forEach(box => 
-            box.addEventListener("click", handleBoxClick)
+            box.addEventListener("click", function(e){
+                handleBoxClick(e);
+            })
         );
 
         const resetBtn = document.querySelector(".resetBtn");
@@ -119,7 +122,7 @@ const displayController = (function() {
             e.preventDefault();
             const xPlayerInputValue = form.elements.xPlayer.value;
             const oPlayerInputValue = form.elements.oPlayer.value;
-            let gamePlayers = createPlayers(xPlayerInputValue, oPlayerInputValue);
+            let gamePlayers = playerController(xPlayerInputValue, oPlayerInputValue);
             console.log(gamePlayers) // >> this returns the desired object
             displayController.createDisplay();
             displayController.bindEvents();
@@ -129,8 +132,6 @@ const displayController = (function() {
     function handleBoxClick(e) {
         const clickedBoxIndex = parseInt(e.target.dataset.index);
         const eventTarget = e.target;
-        console.log(eventTarget)
-        console.log(clickedBoxIndex)
         gameController.playRound(clickedBoxIndex);
     }
 
