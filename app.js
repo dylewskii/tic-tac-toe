@@ -36,10 +36,10 @@ const playerController = function(xPlayerInputValue, oPlayerInputValue) {
     return players;
 };
 
-
 const gameController = (function () {
+    let turnMessage = document.querySelector(".turnIndicator");
     const gb = gameBoardController.gameBoard;
-    const winningCombo = [
+    const winningCombos = [
         // horizontal
         [0, 1, 2],
         [3, 4, 5],
@@ -59,14 +59,26 @@ const gameController = (function () {
             return
         } 
         gameBoardController.gameBoard[clickedBoxIndex] = gamePlayers.currPlayer.symbol;
+        checkWinner();
         gamePlayers.switchPlayer()
         
     };
 
     function checkWinner(){
-        winningCombo.forEach(arr => {
-            arr.forEach(num => console.log(num))
-        });
+        let gameWon = false;
+        const symbol = gamePlayers.currPlayer.symbol;
+
+        winningCombos.forEach(arr => {
+            const [a, b, c] = arr;
+            if (gb[a] === symbol && gb[b] === symbol && gb[c] === symbol){
+                gameWon = true;
+            }
+        })
+
+        if (gameWon){
+            turnMessage.textContent = `${gamePlayers.currPlayer.name} has won!`;
+        }
+
     };
 
         
@@ -77,7 +89,6 @@ const gameController = (function () {
     }
 
 })();
-
 
 const displayController = (function() {
     const gridContainer = document.querySelector(".grid-container");
