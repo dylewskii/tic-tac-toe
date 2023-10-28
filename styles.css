@@ -43,6 +43,12 @@ table {
 	border-spacing: 0;
 }
 
+/* Fonts */
+@font-face {
+    font-family: "main-font";
+    src: url(assets/fonts/SamuraiBlast-YznGj.ttf);
+}
+
 /* Main */
 
 body {
@@ -55,7 +61,9 @@ body {
 /* Header */
 
 .header > h1 {
-    font-size: 3rem;
+    font-family: "main-font";
+    color: #5490eb;
+    font-size: 4rem;
     margin: 70px 0 50px 0;
 }
 
