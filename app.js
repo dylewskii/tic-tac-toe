@@ -66,8 +66,10 @@ const gameController = (function () {
 
     function checkWinner(){
         let gameWon = false;
+        let draw = false;
         const symbol = gamePlayers.currPlayer.symbol;
 
+        // Checks winner
         winningCombos.forEach(arr => {
             const [a, b, c] = arr;
             if (gb[a] === symbol && gb[b] === symbol && gb[c] === symbol){
@@ -75,19 +77,30 @@ const gameController = (function () {
             }
         })
 
-        if (gameWon){
-            turnMessage.textContent = `${gamePlayers.currPlayer.name} has won!`;
+        // Checks for a tie
+        gb.forEach(box => {
+            if (!box){
+                draw = false;
+            } else {
+                draw = true;
+            }
+        })
+
+        // Displays Tie Result
+        if (draw && !gameWon){
+            turnMessage.textContent = `It's a tie!`;
         }
 
+        // Displays Win Result
+        if (gameWon || gameWon && draw){
+            turnMessage.textContent = `${gamePlayers.currPlayer.name} has won!`;
+        }
     };
-
-        
 
     return {
         playRound,
         checkWinner
     }
-
 })();
 
 const displayController = (function() {
