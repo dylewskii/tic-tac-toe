@@ -49,13 +49,23 @@ table {
     src: url(assets/fonts/SamuraiBlast-YznGj.ttf);
 }
 
+@font-face {
+    font-family: "secondary-font";
+    src: url(assets/fonts/SometypeMono-VariableFont_wght.ttf);
+}
+
 /* Main */
+
+* {
+    font-family: "secondary-font";
+}
 
 body {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: "secondary-font";
 }
 
 /* Header */
