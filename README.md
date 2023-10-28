@@ -1,5 +1,13 @@
 # tic-tac-toe
-Tic-Tac-Toe
+A Tic-Tac-Toe game which you can play in your browser.
+
+Live  👉 
+
+## Focus Points: 
+- To have as little global code as possible. 
+- Use Modules/Factories.
+
+## Final Outcome:
 
 
 ## Languages used:
