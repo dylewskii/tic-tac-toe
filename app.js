@@ -6,14 +6,12 @@ const gameBoardController = (function() {
     ["", "", "", 
     "", "", "", 
     "", "", ""];
-    gameBoardObj.addValue = function (symbol, index) {
-        this.gameBoard[index] = `${symbol}`;
-    }
 
     return gameBoardObj;
 })();
 
 const playerController = function(xPlayerInputValue, oPlayerInputValue) {
+    let turnMessage = document.querySelector(".turnIndicator");
     let players = {
         xPlayer: {
             name: xPlayerInputValue,
@@ -29,6 +27,7 @@ const playerController = function(xPlayerInputValue, oPlayerInputValue) {
 
         switchPlayer : function() {
             this.currPlayer = this.currPlayer === this.xPlayer ? this.oPlayer : this.xPlayer;
+            turnMessage.textContent = `${this.currPlayer.name}'s turn. Pick a box: `;
         }
     };
 
@@ -55,18 +54,17 @@ const gameController = (function () {
 
     function playRound(clickedBoxIndex) {
         if (gameBoardController.gameBoard[clickedBoxIndex] !== ""){
-            console.log("spot taken")
-            return
+            return;
         } 
         gameBoardController.gameBoard[clickedBoxIndex] = gamePlayers.currPlayer.symbol;
-        checkWinner();
-        gamePlayers.switchPlayer()
-        
+        if (!checkWinner()){
+            gamePlayers.switchPlayer()
+        }
     };
 
     function checkWinner(){
         let gameWon = false;
-        let draw = false;
+        let draw = true;
         const symbol = gamePlayers.currPlayer.symbol;
 
         // Checks winner
@@ -75,26 +73,27 @@ const gameController = (function () {
             if (gb[a] === symbol && gb[b] === symbol && gb[c] === symbol){
                 gameWon = true;
             }
-        })
+        });
 
         // Checks for a tie
         gb.forEach(box => {
-            if (!box){
+            if (box === ""){
                 draw = false;
-            } else {
-                draw = true;
             }
-        })
+        });
 
         // Displays Tie Result
         if (draw && !gameWon){
-            turnMessage.textContent = `It's a tie!`;
-        }
+            turnMessage.textContent = `It's a tie! Press Restart to play again`;
+            return 'tie';
+        };
 
         // Displays Win Result
-        if (gameWon || gameWon && draw){
+        if (gameWon || gameWon && !draw){
             turnMessage.textContent = `${gamePlayers.currPlayer.name} has won!`;
-        }
+            return true;
+        };
+        return false;
     };
 
     return {
@@ -137,12 +136,13 @@ const displayController = (function() {
         );
 
         const resetBtn = document.querySelector(".resetBtn");
-        resetBtn.addEventListener("click", resetDisplay)
+        resetBtn.addEventListener("click", resetDisplay);
     };
 
     function beginGame(){
         const startBtn = document.querySelector(".startBtn");
         const form = document.querySelector(".game-settings-form");
+        let turnMessage = document.querySelector(".turnIndicator");
         startBtn.addEventListener("click", function(e){
             e.preventDefault();
             const xPlayerInputValue = form.elements.xPlayer.value;
@@ -151,6 +151,7 @@ const displayController = (function() {
             console.log(gamePlayers) // >> this returns the desired object
             displayController.render();
             displayController.bindEvents();
+            turnMessage.textContent = `${gamePlayers.currPlayer.name}'s turn. Pick a box: `;
         }, {once : true})
     };
 
