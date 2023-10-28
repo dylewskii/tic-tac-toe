@@ -61,15 +61,15 @@ const gameController = (function () {
         gameBoardController.gameBoard[clickedBoxIndex] = gamePlayers.currPlayer.symbol;
         gamePlayers.switchPlayer()
         
-    }
+    };
 
     function checkWinner(){
+        winningCombo.forEach(arr => {
+            arr.forEach(num => console.log(num))
+        });
+    };
 
-        for (let arr = 0; arr < winningCombo.length; arr++){
-            console.log(winningCombo[arr])
-            console.log(gb)
-        }
-    }
+        
 
     return {
         playRound,
@@ -103,9 +103,8 @@ const displayController = (function() {
         render();
     }
 
-    function bindEvents(players){
+    function bindEvents(){
         const gameBoardBoxes = document.querySelectorAll(".grid-box");
-        const gamePlayers = players;
         
         gameBoardBoxes.forEach(box => 
             box.addEventListener("click", function(e){
