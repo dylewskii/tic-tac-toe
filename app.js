@@ -124,6 +124,7 @@ const displayController = (function() {
         const gameBoardBoxes = gameBoardController.gameBoard;
         gameBoardBoxes.forEach((box, i) => gameBoardBoxes[i] = "");
         render();
+        bindEvents();
     }
 
     function bindEvents(){
