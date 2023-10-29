@@ -84,7 +84,7 @@ const gameController = (function () {
 
         // Displays Tie Result
         if (draw && !gameWon){
-            turnMessage.textContent = `It's a tie! Press Restart to play again`;
+            turnMessage.textContent = `It's a tie! Press Reset to Play Again!`;
             return 'tie';
         };
 
