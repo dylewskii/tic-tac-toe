@@ -1,7 +1,7 @@
 # tic-tac-toe
 A Tic-Tac-Toe game which you can play in your browser.
 
-Live  👉 
+Live  👉 https://dylewskii.github.io/tic-tac-toe/
 
 ## Focus Points: 
 - To have as little global code as possible. 
