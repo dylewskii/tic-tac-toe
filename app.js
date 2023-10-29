@@ -59,6 +59,8 @@ const gameController = (function () {
         gameBoardController.gameBoard[clickedBoxIndex] = gamePlayers.currPlayer.symbol;
         if (!checkWinner()){
             gamePlayers.switchPlayer()
+        } else {
+            disableBoard();
         }
     };
 
@@ -90,21 +92,38 @@ const gameController = (function () {
 
         // Displays Win Result
         if (gameWon || gameWon && !draw){
+            disableBoard();
             turnMessage.textContent = `${gamePlayers.currPlayer.name} has won!`;
             return true;
         };
         return false;
     };
 
+    function disableBoard(){
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((button) => {
+            if (!button.classList.contains("resetBtn")){
+                button.disabled = true;
+            }
+        })
+    };
+
+    function enableBoard(){
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach((button) => button.disabled = false);
+    };
+
     return {
         playRound,
-        checkWinner
+        checkWinner,
+        enableBoard
     }
 })();
 
 const displayController = (function() {
     const gridContainer = document.querySelector(".grid-container");
     const gameBoard = gameBoardController.gameBoard;
+    let turnMessage = document.querySelector(".turnIndicator");
 
     function render() {       
         while (gridContainer.firstChild) {
@@ -120,11 +139,26 @@ const displayController = (function() {
         }
     }
       
+    // function resetDisplay() {
+    //     const gameBoardBoxes = gameBoardController.gameBoard;
+    //     while (gridContainer.firstChild) {
+    //         gridContainer.removeChild(gridContainer.firstChild);
+    //     }
+    //     // gameBoardBoxes.forEach((box, i) => gameBoardBoxes[i] = "");
+    //     // render();
+    //     bindEvents();
+    // }
+
     function resetDisplay() {
-        const gameBoardBoxes = gameBoardController.gameBoard;
-        gameBoardBoxes.forEach((box, i) => gameBoardBoxes[i] = "");
-        render();
-        bindEvents();
+        while (gridContainer.firstChild) {
+            gridContainer.removeChild(gridContainer.firstChild);
+        }
+
+        gameBoard.forEach((box, i) => gameBoard[i] = "");
+        turnMessage.textContent = "👇 Enter Player Names & Press Start to Begin 👇";
+        enableBoard();
+
+        beginGame();
     }
 
     function bindEvents(){
@@ -143,7 +177,6 @@ const displayController = (function() {
     function beginGame(){
         const startBtn = document.querySelector(".startBtn");
         const form = document.querySelector(".game-settings-form");
-        let turnMessage = document.querySelector(".turnIndicator");
         startBtn.addEventListener("click", function(e){
             e.preventDefault();
             const xPlayerInputValue = form.elements.xPlayer.value;
