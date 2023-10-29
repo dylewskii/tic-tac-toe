@@ -8,7 +8,7 @@ Live  👉
 - Use Modules/Factories.
 
 ## Final Outcome:
-
+![tic tac toe final outcome](./assets/images/tictactoe-final.png)
 
 ## Languages used:
 
