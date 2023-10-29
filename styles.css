@@ -146,6 +146,7 @@ body {
 }
 
 .game-options > button {
+    color: #000;
     background-color: aliceblue;
     border: none;
     border-radius: 25px;
