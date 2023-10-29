@@ -157,3 +157,13 @@ body {
 .game-options > button:hover {
     border: 2px solid rgb(159, 159, 255);
 }
+
+@media (max-width: 485px){
+    .header > h1 {
+        font-size: 3rem;
+    }
+
+    .turnIndicator {
+        font-size: 0.8rem;
+    }
+}
