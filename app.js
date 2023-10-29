@@ -138,16 +138,6 @@ const displayController = (function() {
             gridContainer.appendChild(newBox);
         }
     }
-      
-    // function resetDisplay() {
-    //     const gameBoardBoxes = gameBoardController.gameBoard;
-    //     while (gridContainer.firstChild) {
-    //         gridContainer.removeChild(gridContainer.firstChild);
-    //     }
-    //     // gameBoardBoxes.forEach((box, i) => gameBoardBoxes[i] = "");
-    //     // render();
-    //     bindEvents();
-    // }
 
     function resetDisplay() {
         while (gridContainer.firstChild) {
@@ -156,8 +146,8 @@ const displayController = (function() {
 
         gameBoard.forEach((box, i) => gameBoard[i] = "");
         turnMessage.textContent = "👇 Enter Player Names & Press Start to Begin 👇";
-        enableBoard();
 
+        enableBoard();
         beginGame();
     }
 
