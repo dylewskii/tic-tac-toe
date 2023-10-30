@@ -18,6 +18,7 @@ Live  👉 https://dylewskii.github.io/tic-tac-toe/
 
 ## Future TODO:
 - Create an AI so that a player can play against the computer.
+- Fix Reset button.
 
 ## Credits:
 Fonts [Licensed As Freeware, Non-Commercial] - https://www.fontspace.com/samurai-blast-font-f94192
